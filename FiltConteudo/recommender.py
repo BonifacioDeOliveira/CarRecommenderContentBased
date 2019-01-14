@@ -1,4 +1,6 @@
 import numpy as np
+from math import sqrt
+
 
 def manhattan(carros, perfilDoUsuario):
     """Computes the Manhattan distance. """
