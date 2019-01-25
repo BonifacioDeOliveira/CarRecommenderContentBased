@@ -37,21 +37,30 @@ training_dataset.drop(['Concessionaria','Conforto','Seguranca','GastosFixos','De
 #/////////////////////////////////////////////////////////// PERFIL DO USUARIO //////////////////////////////////////////////////////////////////////////////
 
 #  Perfil do usuario
-Usuario = {"Conforto": 2,"Seguranca": 2,"GastosFixos": 1,"Desempenho": 1,"Carroceria": 1.5,"NumLugares": 5,"NumeroDePortas": 3,"Finalidade": 1,"Combustivel": 2,"Valor": 4}
 key = ["Conforto","Seguranca","GastosFixos","Desempenho","Carroceria","NumLugares","NumeroDePortas","Finalidade","Combustivel","Valor"]
+#perfilUsuario = {"Conforto": 2,"Seguranca": 2,"GastosFixos": 1,"Desempenho": 1,"Carroceria": 1.5,"NumLugares": 5,"NumeroDePortas": 3,"Finalidade": 1,"Combustivel": 2,"Valor": 4}
+perfilUsuario = {}
+# Preencher o perfil usuario
 user = []
-for j in key:
-    user.append(Usuario[j])
+def preencheperfil():
+    print("O Perfil do usuario deve ser preenchido a seguir com valores numericos de 1 a 5: ")
+    perfilUsuario['Conforto'] = int(input('Conforto: '))
+    perfilUsuario['Seguranca'] = int(input('Seguranca: '))
+    perfilUsuario['GastosFixos'] = int(input('Gastos Fixos: '))
+    perfilUsuario['Desempenho'] = int(input('Desempenho: '))
+    perfilUsuario['Carroceria'] = float(input('Carroceria: '))
+    perfilUsuario['NumLugares'] = int(input('Numero de Lugares: '))
+    perfilUsuario['NumeroDePortas'] = int(input('Numero de Portas: '))
+    perfilUsuario['Finalidade'] = int(input('Finalidade: '))
+    perfilUsuario['Combustivel'] = int(input('Combustivel: '))
+    perfilUsuario['Valor'] = int(input('Valor: '))
 
-#///////////////////////////////////////////// METRICAS DE SIMILARIDADE /////////////////////////////////////////////////////////////////////////////////////
-
-#No pacote recommender
-
-#////////////////////////////////////////////////////////////RECOMMENDER ////////////////////////////////////////////////////////////////////////////////////
-# Excuta a recomendacao de carros para um determinado usuario
+    user = []
+    for j in key: #O perfil do usuario recebe os valores inseridos
+        user.append(perfilUsuario[j])
 
 
-#No pacote recommender
+
 
 #///////////////////////////////////////////////////SEPARA O DATASET DE FORMA ALEATORIA E SALVA EM UM CSV///////////////////////////////////////////////////
 #Seleciona Carros Aleatorios
@@ -78,9 +87,9 @@ training_dataset = pd.DataFrame(train_dataset, columns=['ID','Marca','Modelo','A
 training_dataset.drop(['ID', 'selected'],axis=1, inplace=True)
 print(training_dataset)
 
-selected = []
+selected = [] #Vai ser preenchida com os carros selecionados
 selected_numbers = 0
-IDS = []
+IDS = [] #Vai ser preenchida com os carros presentes na lista " selected "
 entrada = 1
 print("Quais carros lhe interessam? digitar o numero e selecionar 'Enter', ao terminar digitar e selecionar '-1'")
 while(entrada != -1): #Vai preencher uma lista com os carros selecionados
@@ -106,66 +115,14 @@ print(selected_numbers)
 
 # RETORNA A LISTA "user_selected"
 
-#////////////////////////////////////////////// METRICAS DE AVALIACAO ///////////////////////////////////////////////////////////////////////////////////////
-
-#No pacote metricasAva
-
-#/////////////////////////////////////////////ARMAZENA AS NOTAS PARA COMPARACAO//////////////////////////////////////////////////////////////////////////////
-'''
-def armazenarNotas(pre,re,Fme):
-    with open('C:/Users/User Acer/Desktop/Paic/Datasets/Avaliacao/avaliacoes.csv', 'a') as f:
-        writer = csv.writer(f)
-        pre = float("{0:.3f}".format(pre))
-        re = float("{0:.3f}".format(re))
-        Fme = float("{0:.3f}".format(Fme))
-
-        writer.writerow([pre,re,Fme])
-
-#///////////////////////////////////////////// PROCEDIMENTOS COM A AVALIACAO ////////////////////////////////////////////////////////////////////////////////
-
-#sera considerado 3 como numrecomendados
-def avaliar(selected):
-    relevantes = int(input("Sera medida a precisao, digitar a quantidade de automoveis relevantes e tecle 'Enter': "))
-
-    if relevantes <= 3 and relevantes >=0:
-
-        pre = ava.precisao(relevantes, 3)
-        #print(pre)
-        re = ava.recall(relevantes, selected)
-        #print(re)
-        Fme = ava.F_measure(relevantes, 3, selected)
-        #print(Fme)
-
-        armazenarNotas(pre,re,Fme)
-
-        print("a precisao e: %1.4f" %pre)
-        print("o recall e: %1.4f" %re)
-        print("Fmeasure e: %1.4f" %Fme)
-
-    else:
-
-        print("Valor invalido, tente novamente: ")
-        avaliar(selected)
-
-#//////////////////////////////////////////////////AVALIAR SISTEMA///////////////////////////////////////////////////////////////////////////////////////////
-#TRABALHA COM LEITURA DO DATASET AVALIACAO E CALCULA A MEDIA DAS AVALIACOES
-
-def avaliasistema():
-    avalia = pd.read_csv("C:/Users/User Acer/Desktop/Paic/Datasets/Avaliacao/avaliacoes.csv")
-    avalia_dataset = pd.DataFrame(avalia, columns=['pre','re','Fme'])
-
-    soma = sum(avalia_dataset["Fme"].values)
-    media = soma/(len(avalia_dataset["Fme"].values))
-
-    return(media)
-'''
 #//////////////////////////////////////////////////////RACIOCINIO BASEADO EM CASOS///////////////////////////////////////////////////////////////////////////
 
 #No pacote CaseBased.py
 
 #///////////////////////////////////////////////////////  MAIN  /////////////////////////////////////////////////////////////////////////////////////////////
 
+preencheperfil()
 
-rec.recommend(user, df)
-#ava.avaliar(selected_numbers)
+rec.recommend(perfilUsuario, df)
+ava.avaliar(selected_numbers)
 #print(ava.avaliasistema())

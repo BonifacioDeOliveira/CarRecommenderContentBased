@@ -20,7 +20,6 @@ def cos_sim(a, b):
     comparaA = []
     comparaB = []
     for key in a:
-        key = int(key)
         #arrendA=int(round(a[key]))
         #arrendB=int(round(b[key]))
         comparaA.append(a[key])
@@ -68,13 +67,14 @@ def recommend(userName, df):
     #compare = list(userName.values())
     for i in range(tam):
         carro = df.iloc[i]
+
         #distance = pearson(list(carro)[4:], userName)
-        distance = cos_sim(list(carro)[4:], userName)
-        #distance = manhattan(list(carro)[4:], userName)
+        #distance = cos_sim(dict((carro)[4:]), userName)
+        distance = manhattan(list(carro)[4:], userName)
         distances.append((distance, list(carro)[:4]))
     # sort based on distance -- closest first
     distances.sort()
-    distances.reverse() # ---- Pearson and Cosseno
+    #distances.reverse() # ---- Pearson and Cosseno
     #distancesPearson = sorted(distances, key=int, reverse=True)
     print(distances[:3])
     return distances
